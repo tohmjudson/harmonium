@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .redBackground {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Soundy!</h1>
+    <button id="key1" class="key">Key 1</button>
+    <button id="key2" class="key">Key 2</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      var socket = io();
+
+      var playKey = function (data) {
+        $('#' + data.id)[data.action]('redBackground');
+      }
+
+      //local
+      $('.key').mousedown(function () {
+        var keyData = {
+          id: $(this).attr('id'),
+          action: 'addClass'
+        }
+
+        playKey(keyData);
+
+        socket.emit('keyPress', keyData);
+      });
+
+      $('.key').mouseup(function () {
+        var keyData = {
+          id: $(this).attr('id'),
+          action: 'removeClass'
+        }
+        playKey(keyData);
+        socket.emit('keyPress', keyData);
+      });
+
+      //remote
+      socket.on('keyPressed', function(data){
+        playKey(data);
+        console.log(data);
+      });
+    </script>
+  </body>
+</html>
