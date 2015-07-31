@@ -1,54 +1,113 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <style media="screen">
-      .redBackground {
-        background-color: red;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Soundy!</h1>
+<head>
+  <meta charset="utf-8">
+  <title>Harmonium</title>
+
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+</head>
+
+<body>
+    <h1>Harmonium</h1>
+<hr>
+    <p><input type="button" value="Poke the server" id="poke" /></p>
+<hr>
     <button id="key1" class="key">Key 1</button>
     <button id="key2" class="key">Key 2</button>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+<hr>
+    <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
 
-    <script>
-      var socket = io();
+<!-- SCRIPTING -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="javascripts/jquery_knob.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="javascripts/socketConnect.js"></script>
+    <script type="text/javascript" src="javascripts/app.js"></script>
 
-      var playKey = function (data) {
-        $('#' + data.id)[data.action]('redBackground');
-      }
 
-      //local
-      $('.key').mousedown(function () {
-        var keyData = {
-          id: $(this).attr('id'),
-          action: 'addClass'
+
+    <script type="text/javascript">
+    
+    var audioContext = new AudioContext()
+
+    function playButton01 (delay, pitch, duration) {
+
+      var delay = 0;
+      var pitch = 220;
+      var duration = 0.5;
+      var startTime = audioContext.currentTime + delay;
+      var endTime = startTime + duration;
+      var oscillator = audioContext.createOscillator();
+      oscillator.connect(audioContext.destination);
+      oscillator.type = 'sine';
+      oscillator.frequency.value = pitch;
+      oscillator.start(startTime);
+      oscillator.stop(endTime);
+      oscillator.connect(analyser);
+    };
+
+    function playButton02 (delay, pitch, duration) {
+
+      var delay = 0;
+      var pitch = 440;
+      var duration = 0.5;
+      var startTime = audioContext.currentTime + delay;
+      var endTime = startTime + duration;
+      var oscillator = audioContext.createOscillator();
+      oscillator.connect(audioContext.destination);
+      oscillator.type = 'sawtooth';
+      oscillator.frequency.value = pitch;
+      oscillator.start(startTime);
+      oscillator.stop(endTime);
+      oscillator.connect(analyser);
+    };
+
+    //============ VISUAL FOR TESTING ===================//
+
+    var canvas = document.getElementById("myCanvas");
+    var canvasContext = canvas.getContext('2d');
+    var analyser = audioContext.createAnalyser();
+    analyser.fftSize = 2048;
+    var bufferLength = analyser.frequencyBinCount;
+    var dataArray = new Uint8Array(bufferLength);
+    canvasWidth = 200;
+    canvasHeigth = 100;
+    canvasContext.clearRect(0, 0, canvasWidth, canvasHeigth);
+
+    function draw() {
+        drawVisual = requestAnimationFrame(draw);
+        analyser.getByteTimeDomainData(dataArray);
+        canvasContext.fillStyle = 'rgb(200, 200, 200)';
+        canvasContext.fillRect(0, 0, canvasWidth, canvasHeigth);
+        canvasContext.lineWidth = 2;
+        canvasContext.strokeStyle = 'rgb(0, 0, 0)';
+        canvasContext.beginPath();
+
+        var sliceWidth = canvasWidth * 1.0 / bufferLength;
+        var x = 0;
+
+        for(var i = 0; i < bufferLength; i++) {
+            var v = dataArray[i] / 128.0;
+            var y = v * canvasHeigth/2;
+
+            if(i === 0) {
+                canvasContext.moveTo(x, y);
+            } else {
+                canvasContext.lineTo(x, y);
+            }
+            x += sliceWidth;
         }
 
-        playKey(keyData);
+        canvasContext.lineTo(canvas.width, canvas.height/2);
+        canvasContext.stroke();
+        };
 
-        socket.emit('keyPress', keyData);
-      });
+    draw();
 
-      $('.key').mouseup(function () {
-        var keyData = {
-          id: $(this).attr('id'),
-          action: 'removeClass'
-        }
-        playKey(keyData);
-        socket.emit('keyPress', keyData);
-      });
 
-      //remote
-      socket.on('keyPressed', function(data){
-        playKey(data);
-        console.log(data);
-      });
-    </script>
-  </body>
+  </script>
+
+</body>
 </html>

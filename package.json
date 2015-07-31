@@ -1,9 +1,9 @@
 {
-  "name": "soundy",
+  "name": "harmonium",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
