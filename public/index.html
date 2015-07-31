@@ -13,38 +13,45 @@
 <hr>
     <p><input type="button" value="Poke the server" id="poke" /></p>
 <hr>
-    <button id="key1" class="key">Key 1</button>
-    <button id="key2" class="key">Key 2</button>
+    <button id="0" class="key">Sine</button>
+    <button id="1" class="key">Square</button>
+    <button id="2" class="key">Sawtooth</button>
+    <button id="3" class="key">Triangle</button>
 <hr>
-    <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
+    <canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;">
 
 <!-- SCRIPTING -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
     <script type="text/javascript" src="javascripts/jquery_knob.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="javascripts/socketConnect.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
 
 
 
     <script type="text/javascript">
     
-    var audioContext = new AudioContext()
+    var audioContext = new AudioContext();
+
 
     function playButton01 (delay, pitch, duration) {
 
       var delay = 0;
       var pitch = 220;
-      var duration = 0.5;
+      var duration = 0.25;
       var startTime = audioContext.currentTime + delay;
       var endTime = startTime + duration;
       var oscillator = audioContext.createOscillator();
-      oscillator.connect(audioContext.destination);
+      var oscGain = audioContext.createGain();
+
+      oscillator.connect(oscGain);
       oscillator.type = 'sine';
       oscillator.frequency.value = pitch;
+      oscGain.gain.value = .2;
       oscillator.start(startTime);
       oscillator.stop(endTime);
+      oscGain.connect(audioContext.destination)
+
       oscillator.connect(analyser);
     };
 
@@ -52,21 +59,68 @@
 
       var delay = 0;
       var pitch = 440;
-      var duration = 0.5;
+      var duration = 0.25;
       var startTime = audioContext.currentTime + delay;
       var endTime = startTime + duration;
       var oscillator = audioContext.createOscillator();
-      oscillator.connect(audioContext.destination);
-      oscillator.type = 'sawtooth';
+      var oscGain = audioContext.createGain();
+
+      oscillator.connect(oscGain);
+      oscillator.type = 'square';
       oscillator.frequency.value = pitch;
+      oscGain.gain.value = .2;
       oscillator.start(startTime);
       oscillator.stop(endTime);
+      oscGain.connect(audioContext.destination)
       oscillator.connect(analyser);
     };
 
+    function playButton03 (delay, pitch, duration) {
+
+      var delay = 0;
+      var pitch = 220;
+      var duration = 0.25;
+      var startTime = audioContext.currentTime + delay;
+      var endTime = startTime + duration;
+      var oscillator = audioContext.createOscillator();
+      var oscGain = audioContext.createGain();
+
+      oscillator.connect(oscGain);
+      oscillator.type = 'sawtooth';
+      oscillator.frequency.value = pitch;
+      oscGain.gain.value = .2;
+      oscillator.start(startTime);
+      oscillator.stop(endTime);
+      oscGain.connect(audioContext.destination)
+
+      oscillator.connect(analyser);
+    };
+
+    function playButton04 (delay, pitch, duration) {
+
+      var delay = 0;
+      var pitch = 880;
+      var duration = 0.25;
+      var startTime = audioContext.currentTime + delay;
+      var endTime = startTime + duration;
+      var oscillator = audioContext.createOscillator();
+      var oscGain = audioContext.createGain();
+
+      oscillator.connect(oscGain);
+      oscillator.type = 'triangle';
+      oscillator.frequency.value = pitch;
+      oscGain.gain.value = .2;
+      oscillator.start(startTime);
+      oscillator.stop(endTime);
+      oscGain.connect(audioContext.destination)
+      oscillator.connect(analyser);
+    };
+
+
+
     //============ VISUAL FOR TESTING ===================//
 
-    var canvas = document.getElementById("myCanvas");
+    var canvas = document.getElementById("waveFormCanvas");
     var canvasContext = canvas.getContext('2d');
     var analyser = audioContext.createAnalyser();
     analyser.fftSize = 2048;
