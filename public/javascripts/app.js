@@ -5,7 +5,6 @@ $(function() {
     var pitches = 220;
     var oscType = 'sine';
 
-
 //=============== USER =====================//
     var username = prompt('What\'s your username?');// The visitor is asked for their username...
     socket.emit('newUser', username); // It's sent with the signal "newUser"
@@ -26,6 +25,8 @@ $(function() {
       }
       socket.emit('keyPress', keyData);
     });
+
+
 
 //=============== ON = LISTEN =====================//
     socket.on('keyPressed', function(data){
@@ -52,13 +53,23 @@ $(function() {
         };
     });
 
-    socket.on('freqBroadcast', function(data){
+    socket.on('freqBroadcast', function (data){
       //console.log(data);
       freqDisplay.innerHTML = data + 'Hz';
       pitches = data;
       freqSlider.value = data;
     });
 
+
+    socket.on('activeUsers', function (users){
+      $("ul").html('')
+
+      $.each(users , function(index, value){
+        //console.log(index + ':' + value.username);
+        $('#activeUsersDisplay').append('<li style="color:'+value.color+'">'+value.username +'</li>');
+      });
+
+    });
 
 //=============== AUDIO AREA =====================//
     var playKey = function (data) {

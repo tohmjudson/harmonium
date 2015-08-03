@@ -1,49 +1,12 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #f2f2f2;
+  color: black;
 }
 
 div {
 	display: inline-block;
-}
-
-.redBackground {
-background-color: red;
-}
-
-.container{
-}
-
-#pad01 {
-	background-color:orange;
-	width:100px;
-	height:100px;
-}
-
-#freqDial01{
-	width:10px;
-	height: 10px;
-}
-
-#pad02 {
-	background-color:blue;
-	width:100px;
-	height:100px;
-}
-
-#freqDial02{
-	width:10px;
-	height: 10px;
-}
-
-.dial {
-	width: 104px; 
-	height: 66px; 
-	position: absolute; 
-	vertical-align: middle; 
-	margin-top: 66px; 
-	margin-left: -152px; 
-	border: 0px; 
 }
 
 label {
@@ -54,4 +17,15 @@ label {
 input {
     display: inline-block;
     float: right;
+}
+
+li {
+list-style: none;
+}
+
+.container{
+}
+
+.users {
+	font-weight: bold;
 }
