@@ -1,0 +1,22 @@
+Goal: Create a web audio based trio application
+
+Needs:
+Log Users
+Mouse positon
+
+
+To do:
+1. Establish audio connection via socket.io
+2. Ability to control various parameters on client side (eg pitch, filter, pan)
+3. Keyboard input synth
+4. Bass line Synth
+5. Small Sequencer (with pattern storage)
+6. Mixer
+7. Effects
+
+Long Term:
+1. Record created audio
+2. OSC data out of page, remote control of Max and Live
+3. Load audio into page
+4. Different Rooms
+5. Web MIDI

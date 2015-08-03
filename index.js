@@ -4,7 +4,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
-
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
@@ -12,10 +11,12 @@ app.get('/', function(req, res){
 });
 
 
+
 io.on('connection', function(socket){
 	
 	// When the client connects, they are sent a message
 	socket.emit('message', "You are connected!");
+
 	// The other clients are told that someone new has arrived
     socket.broadcast.emit('message', 'Another user has just connected!');
 
@@ -24,15 +25,19 @@ io.on('connection', function(socket){
 	    socket.username = username;
 	});
 
-	// When a "message" is received (click on the button), it's logged in the console
+	// When a "message" is received, it's logged in the console
     socket.on('message', function (message) {
-        // The username of the person who clicked is retrieved from the session variables
         console.log(socket.username + ': ' + message);
-    }); 
-  
+    });
+
+  // When a "keyPress" is received, it's broadcast to all
   	socket.on('keyPress', function(data){
-    	//console.log(data);
     	socket.broadcast.emit('keyPressed', data);
+  	});
+
+  // When a "freqBroadcast" is received, it's broadcast to all
+  	socket.on('freqBroadcast', function(data){
+    	socket.broadcast.emit('freqBroadcast', data);
   	});
 
 });

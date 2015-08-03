@@ -45,3 +45,13 @@ background-color: red;
 	margin-left: -152px; 
 	border: 0px; 
 }
+
+label {
+    display: block;
+    line-height: 25px;
+}
+
+input {
+    display: inline-block;
+    float: right;
+}

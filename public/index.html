@@ -11,12 +11,17 @@
 <body>
     <h1>Harmonium</h1>
 <hr>
-    <p><input type="button" value="Poke the server" id="poke" /></p>
+    <button id="poke" class="testing">Poke</button>
 <hr>
     <button id="0" class="key">Sine</button>
     <button id="1" class="key">Square</button>
     <button id="2" class="key">Sawtooth</button>
     <button id="3" class="key">Triangle</button>
+<hr>
+    <label for="freq"> Frequency <span id='freqdisplay01'>220Hz</span>
+        <input type="range" id="freqslider01" name="freq-slider" min="26" max="4200" step="1" value="220">
+    </label>
+
 <hr>
     <canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;">
 
@@ -31,134 +36,7 @@
 
     <script type="text/javascript">
     
-    var audioContext = new AudioContext();
-
-
-    function playButton01 (delay, pitch, duration) {
-
-      var delay = 0;
-      var pitch = 220;
-      var duration = 0.25;
-      var startTime = audioContext.currentTime + delay;
-      var endTime = startTime + duration;
-      var oscillator = audioContext.createOscillator();
-      var oscGain = audioContext.createGain();
-
-      oscillator.connect(oscGain);
-      oscillator.type = 'sine';
-      oscillator.frequency.value = pitch;
-      oscGain.gain.value = .2;
-      oscillator.start(startTime);
-      oscillator.stop(endTime);
-      oscGain.connect(audioContext.destination)
-
-      oscillator.connect(analyser);
-    };
-
-    function playButton02 (delay, pitch, duration) {
-
-      var delay = 0;
-      var pitch = 440;
-      var duration = 0.25;
-      var startTime = audioContext.currentTime + delay;
-      var endTime = startTime + duration;
-      var oscillator = audioContext.createOscillator();
-      var oscGain = audioContext.createGain();
-
-      oscillator.connect(oscGain);
-      oscillator.type = 'square';
-      oscillator.frequency.value = pitch;
-      oscGain.gain.value = .2;
-      oscillator.start(startTime);
-      oscillator.stop(endTime);
-      oscGain.connect(audioContext.destination)
-      oscillator.connect(analyser);
-    };
-
-    function playButton03 (delay, pitch, duration) {
-
-      var delay = 0;
-      var pitch = 220;
-      var duration = 0.25;
-      var startTime = audioContext.currentTime + delay;
-      var endTime = startTime + duration;
-      var oscillator = audioContext.createOscillator();
-      var oscGain = audioContext.createGain();
-
-      oscillator.connect(oscGain);
-      oscillator.type = 'sawtooth';
-      oscillator.frequency.value = pitch;
-      oscGain.gain.value = .2;
-      oscillator.start(startTime);
-      oscillator.stop(endTime);
-      oscGain.connect(audioContext.destination)
-
-      oscillator.connect(analyser);
-    };
-
-    function playButton04 (delay, pitch, duration) {
-
-      var delay = 0;
-      var pitch = 880;
-      var duration = 0.25;
-      var startTime = audioContext.currentTime + delay;
-      var endTime = startTime + duration;
-      var oscillator = audioContext.createOscillator();
-      var oscGain = audioContext.createGain();
-
-      oscillator.connect(oscGain);
-      oscillator.type = 'triangle';
-      oscillator.frequency.value = pitch;
-      oscGain.gain.value = .2;
-      oscillator.start(startTime);
-      oscillator.stop(endTime);
-      oscGain.connect(audioContext.destination)
-      oscillator.connect(analyser);
-    };
-
-
-
-    //============ VISUAL FOR TESTING ===================//
-
-    var canvas = document.getElementById("waveFormCanvas");
-    var canvasContext = canvas.getContext('2d');
-    var analyser = audioContext.createAnalyser();
-    analyser.fftSize = 2048;
-    var bufferLength = analyser.frequencyBinCount;
-    var dataArray = new Uint8Array(bufferLength);
-    canvasWidth = 200;
-    canvasHeigth = 100;
-    canvasContext.clearRect(0, 0, canvasWidth, canvasHeigth);
-
-    function draw() {
-        drawVisual = requestAnimationFrame(draw);
-        analyser.getByteTimeDomainData(dataArray);
-        canvasContext.fillStyle = 'rgb(200, 200, 200)';
-        canvasContext.fillRect(0, 0, canvasWidth, canvasHeigth);
-        canvasContext.lineWidth = 2;
-        canvasContext.strokeStyle = 'rgb(0, 0, 0)';
-        canvasContext.beginPath();
-
-        var sliceWidth = canvasWidth * 1.0 / bufferLength;
-        var x = 0;
-
-        for(var i = 0; i < bufferLength; i++) {
-            var v = dataArray[i] / 128.0;
-            var y = v * canvasHeigth/2;
-
-            if(i === 0) {
-                canvasContext.moveTo(x, y);
-            } else {
-                canvasContext.lineTo(x, y);
-            }
-            x += sliceWidth;
-        }
-
-        canvasContext.lineTo(canvas.width, canvas.height/2);
-        canvasContext.stroke();
-        };
-
-    draw();
+    
 
 
   </script>
