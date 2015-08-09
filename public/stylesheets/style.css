@@ -14,13 +14,12 @@ label {
     line-height: 25px;
 }
 
-input {
-    display: inline-block;
-    float: right;
-}
-
 li {
 list-style: none;
+}
+
+input {
+	
 }
 
 .container{
@@ -28,4 +27,17 @@ list-style: none;
 
 .users {
 	font-weight: bold;
+}
+
+.slider {
+	-webkit-appearance: slider-vertical;
+	width: 24px;
+}
+
+.pointer {
+  position: absolute;
+  background: red;
+  width: 8px;
+  height: 8px;
+  z-index: 3;
 }

@@ -14,17 +14,41 @@
 
     <ul id="activeUsersDisplay" class="users"></ul>
 <hr>
-    <button id="poke" class="testing">Poke</button>
-<hr>
     <button id="0" class="key">Sine</button>
-    <button id="1" class="key">Square</button>
-    <button id="2" class="key">Sawtooth</button>
-    <button id="3" class="key">Triangle</button>
+    <button id="1" class="key">Sawtooth</button>
+    <button id="2" class="key">Triangle</button>
 <hr>
-    <label for="freq"> Frequency <span id='freqdisplay01'>220Hz</span>
-        <input type="range" id="freqslider01" name="freq-slider" min="26" max="4200" step="1" value="220">
+<hr>
+    <label for="baseOctave"> Base Octave <span id='baseOctaveDisplay' >3</span>
+        <input type="range" id="baseOctave" name="baseOctave-slider" min="2" max="7" step="1" value="3" style="float:right">
+    </label>
+    <label for="basePitch"> Base Pitch <span id='basePitchDisplay'>C</span>
+        <input type="range" id="basePitch" name="basePitch-slider" min="0" max="12" step="1" value="0" style="float:right">
     </label>
 
+    <label for="filter01"> Lowpass Filter <span id='filter01Display'>0</span>
+        <input type="range" id="filter01" name="filter01-slider" min="20" max="20000" step="1" value="2000" style="float:right">
+    </label>
+
+    <h3><input type="checkbox" class="checkbox"> Sequencing On Off</h3>
+        <div class="sequencer">
+          <input id="slider1" list="slider--1" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
+          <input id="slider2" list="slider--2" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
+          <input id="slider3" list="slider--3" class="slider" type="range" min="0" max="19" orient="vertical" value="4">
+          <input id="slider4" list="slider--4" class="slider" type="range" min="0" max="19" orient="vertical" value="5">
+          <input id="slider5" list="slider--5" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
+          <input id="slider6" list="slider--6" class="slider" type="range" min="0" max="19" orient="vertical" value="9">
+          <input id="slider7" list="slider--7" class="slider" type="range" min="0" max="19" orient="vertical" value="11">
+          <input id="slider8" list="slider--8" class="slider" type="range" min="0" max="19" orient="vertical" value="12">
+          <input id="slider9" list="slider--9" class="slider" type="range" min="0" max="19" orient="vertical" value="11">
+          <input id="slider10" list="slider--10" class="slider" type="range" min="0" max="19" orient="vertical" value="9">
+          <input id="slider11" list="slider--11" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
+          <input id="slider12" list="slider--12" class="slider" type="range" min="0" max="19" orient="vertical" value="5">
+          <input id="slider13" list="slider--13" class="slider" type="range" min="0" max="19" orient="vertical" value="4">
+          <input id="slider14" list="slider--14" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
+          <input id="slider15" list="slider--15" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
+          <input id="slider16" list="slider--16" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
+        </div>
 <hr>
     <canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;">
 
@@ -33,5 +57,17 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
+    
+    <script type="text/javascript">
+        var serial = [ 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C']
+
+        function showValue(newValue) {
+          document.getElementById("slider1Display").innerHTML = serial[newValue%12];
+
+        }
+
+
+    </script>
+
 </body>
 </html>

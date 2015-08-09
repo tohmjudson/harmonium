@@ -36,22 +36,57 @@ io.on('connection', function(socket){
       socket.broadcast.emit('activeUsers', users); // All users
   	});
 
+
+
+
+    socket.on('mouse_activity', function (data) {
+      //console.log(data);
+      //socket.broadcast.emit('all_mouse_activity', data);// All users
+      socket.broadcast.emit('all_mouse_activity', {session_id: socket.id, coords: data});
+
+    });
+
+
+
 	// When a "message" is received, it's logged in the console
     socket.on('message', function (message) {
         console.log(socket.username + ': ' + message);
     });
 
   // When a "keyPress" is received, it's broadcast to all
-  	socket.on('keyPress', function(data){
+  	socket.on('keyPress', function (data){
       socket.emit('keyPressed', data);// Current user
     	socket.broadcast.emit('keyPressed', data);// All users
   	});
 
-  // When a "freqBroadcast" is received, it's broadcast to all
-  	socket.on('freqBroadcast', function(data){
-      socket.emit('freqBroadcast', data);// Current user
-    	socket.broadcast.emit('freqBroadcast', data);// All users
+    // When a "baseOctaveBroadcast" is received, it's broadcast to all
+    socket.on('baseOctaveBroadcast', function (data){
+      //socket.emit('baseOctaveBroadcast', data);// Current user
+      socket.broadcast.emit('baseOctaveBroadcast', data);// All users
+    });
+
+  // When a "basePitchBroadcast" is received, it's broadcast to all
+  	socket.on('basePitchBroadcast', function (data){
+      //socket.emit('basePitchBroadcast', data);// Current user
+    	socket.broadcast.emit('basePitchBroadcast', data);// All users
   	});
+
+    // When a "filterBroadcast" is received, it's broadcast to all
+    socket.on('filterBroadcast', function (data){
+      //socket.emit('basePitchBroadcast', data);// Current user
+      socket.broadcast.emit('filterBroadcast', data);// All users
+    });
+
+    socket.on('seqOnOff', function (data){
+      //socket.emit('seqOnOff', data);// NOT for Current user
+      socket.broadcast.emit('seqOnOff', data);// All users
+    });
+
+    socket.on('seqSliders', function (data){
+      //socket.emit('seqSliders', data);// NOT for Current user
+      socket.broadcast.emit('seqSliders', data);// All users
+    });
+
 
 });
 
