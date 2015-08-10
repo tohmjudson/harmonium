@@ -77,9 +77,37 @@ io.on('connection', function(socket){
       socket.broadcast.emit('filterBroadcast', data);// All users
     });
 
+
+
+    // When a "filterBroadcast" is received, it's broadcast to all
+    socket.on('delayTimeBroadcast', function (data){
+      //socket.emit('basePitchBroadcast', data);// Current user
+      socket.broadcast.emit('delayTimeBroadcast', data);// All users
+    });
+    // When a "filterBroadcast" is received, it's broadcast to all
+    socket.on('delayFeedbackBroadcast', function (data){
+      //socket.emit('basePitchBroadcast', data);// Current user
+      socket.broadcast.emit('delayFeedbackBroadcast', data);// All users
+    });
+    // When a "filterBroadcast" is received, it's broadcast to all
+    socket.on('delayCutoffBroadcast', function (data){
+      //socket.emit('basePitchBroadcast', data);// Current user
+      socket.broadcast.emit('delayCutoffBroadcast', data);// All users
+    });
+
+
+
+
+
+
     socket.on('seqOnOff', function (data){
       //socket.emit('seqOnOff', data);// NOT for Current user
       socket.broadcast.emit('seqOnOff', data);// All users
+    });
+
+    socket.on('mutedArrayBroadcast', function (data){
+      //socket.emit('mutedArrayBroadcast', data);// NOT for Current user
+      socket.broadcast.emit('mutedArrayBroadcast', data);// All users
     });
 
     socket.on('seqSliders', function (data){

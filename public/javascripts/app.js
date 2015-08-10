@@ -27,20 +27,16 @@ $(function() {
 //=============== ON = LISTEN =====================//
 socket.on('keyPressed', function(data){
   playKey(data);
-      //console.log(data);
 
       switch (data['id']) {
         case '0':
         oscType = 'sine';
-            //playButton01();
             break;
             case '1':
             oscType = 'sawtooth';
-            //playButton01();
             break;
             case '2':
             oscType = 'triangle';
-            //playButton01();
             break;
 
           };
@@ -49,23 +45,37 @@ socket.on('keyPressed', function(data){
 
 
 socket.on('baseOctaveBroadcast', function (data){
-      //console.log(data);
       baseOctaveDisplay.innerHTML = data - 1;
       baseOctave.value = data;
     });
 
 socket.on('basePitchBroadcast', function (data){
-      //console.log(data);
       basePitchDisplay.innerHTML = serial[data];
       basePitch.value = data;
     });
 
 socket.on('filterBroadcast', function (data){
-      //console.log(data);
       filter01Display.innerHTML = data;
       filter01.value = data;
     });
 
+
+
+socket.on('delayTimeBroadcast', function (data){
+      delayTimeDisplay.innerHTML = data;
+      delayTime.value = data;
+    });
+
+socket.on('delayFeedbackBroadcast', function (data){
+      delayFeedbackDisplay.innerHTML = data;
+      delayFeedback.value = data;
+    });
+
+
+socket.on('delayCutoffBroadcast', function (data){
+      delayCutoffDisplay.innerHTML = data;
+      delayCutoff.value = data;
+    });
 
 socket.on('seqOnOff', function (data){
   //console.log(data);
@@ -99,6 +109,33 @@ socket.on('seqSliders', function (data){
   $('#slider16').val(values[15]);
 });
 
+
+
+
+socket.on('mutedArrayBroadcast', function (data){
+  mutedArray = data;
+  $('#checkbox01').prop('checked', mutedArray[0]);
+  $('#checkbox02').prop('checked', mutedArray[1]);
+  $('#checkbox03').prop('checked', mutedArray[2]);
+  $('#checkbox04').prop('checked', mutedArray[3]);
+  $('#checkbox05').prop('checked', mutedArray[4]);
+  $('#checkbox06').prop('checked', mutedArray[5]);
+  $('#checkbox07').prop('checked', mutedArray[6]);
+  $('#checkbox08').prop('checked', mutedArray[7]);
+  $('#checkbox09').prop('checked', mutedArray[8]);
+  $('#checkbox10').prop('checked', mutedArray[9]);
+  $('#checkbox11').prop('checked', mutedArray[10]);
+  $('#checkbox12').prop('checked', mutedArray[11]);
+  $('#checkbox13').prop('checked', mutedArray[12]);
+  $('#checkbox14').prop('checked', mutedArray[13]);
+  $('#checkbox15').prop('checked', mutedArray[14]);
+  $('#checkbox016').prop('checked', mutedArray[15]);
+});
+
+
+
+
+
 socket.on('activeUsers', function (users){
   $("ul").html('')
 
@@ -124,12 +161,22 @@ var playKey = function (data) {
 
   // grab the sliders from the DOM and bind a `change` event.
   var $sliders = $('.slider');
-  
   $sliders.on('change', function(e) {
     // if the slider changes, store its new value in the appropriate index of the `values` array.
     values[ $(this).index() ] = $(this).val();
     socket.emit('seqSliders', values);
   });
+
+
+
+  var mutedArray = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+  var $mutes = $('.muteBox:checkbox');
+  $mutes.on('change', function(e) {
+    // if the mute changes, store its new value in the appropriate index of the `mutes` array.
+    mutedArray[ $(this).index() ] = $(this).is(':checked');
+    socket.emit('mutedArrayBroadcast', mutedArray);
+  });
+
 
   // the checkbox will control the start & stop of the sequencer.
   $('.checkbox').on('change', function(e) {
@@ -161,17 +208,17 @@ var playKey = function (data) {
   var intervalTime = 25;   // 25ms expressed in milliseconds
 
   // these will keep track of the state of the sequencer:
-      // when the next note is happening
-      var nextNoteTime = null;
-      // the index of the current note from 0 - 7
-      var currentNote  = 0;
-      // the id of the setInterval lookahead
-      var intervalId   = null;
+  // when the next note is happening
+  var nextNoteTime = null;
+  // the index of the current note from 0 - 15
+  var currentNote  = 0;
+  // the id of the setInterval lookahead
+  var intervalId   = null;
 
       function scheduleSequence() {
         while(nextNoteTime < audioContext.currentTime + lookahead) {
       // schedule the next note
-      scheduleNote( values[currentNote], nextNoteTime, currentNote );
+      scheduleNote( values[currentNote], nextNoteTime, currentNote, mutedArray[currentNote] );
       // advance the time
       nextNoteTime += noteLength;
       // keep track of which note we're on
@@ -179,32 +226,59 @@ var playKey = function (data) {
     }
   }
 
-  function scheduleNote(note, time, current) {
+
+//TODO: ALL MUTE, GLIDE, FILTER MOVEMENT, REVERB
+  function scheduleNote(note, time, current, mute) {
     var oscillator = audioContext.createOscillator();
-    var gain = audioContext.createGain();
+    var gainNode = audioContext.createGain();
+    var muteGainNode = audioContext.createGain();
     var filterNode = audioContext.createBiquadFilter();
     var type = oscType;
     var filter01Freq= filter01.value;
+    var muted = mute;
+
+    if(muted) {
+      muteGainNode.gain.value = 1;
+    } else {
+      muteGainNode.gain.value = 0;
+    }
+    muteGainNode.connect(audioContext.destination);
+
+    var delayNode = audioContext.createDelay();
+    delayNode.delayTime.value = delayTime.value;
+    
+    var feedback = audioContext.createGain();
+    feedback.gain.value = delayFeedback.value;
+    
+    var delayFilter = audioContext.createBiquadFilter();
+    delayFilter.frequency.value = delayCutoff.value;
+
+    delayNode.connect(feedback);
+    feedback.connect(delayFilter);
+    delayFilter.connect(delayNode);
+
+
+    delayNode.connect(audioContext.destination);
     
     oscillator.type = type;
     oscillator.frequency.value = mtof(note);
     oscillator.connect(filterNode);
-    gain.connect(audioContext.destination);
-    gain.gain.setValueAtTime(0, time);
-    gain.gain.linearRampToValueAtTime(1, time + attack);
-    gain.gain.linearRampToValueAtTime(0, time + noteLength);
+    
+    gainNode.connect(muteGainNode);
+    muteGainNode.connect(delayNode);
+
+    gainNode.gain.setValueAtTime(0, time);
+    gainNode.gain.linearRampToValueAtTime(1, time + attack);
+    gainNode.gain.linearRampToValueAtTime(0, time + noteLength);
     oscillator.start(time);
     oscillator.stop(time + noteLength);
     oscillator.connect(analyser);
 
-    filterNode.connect(gain);
+    filterNode.connect(gainNode);
     filterNode.type = 'lowpass';
     filterNode.frequency.value = filter01Freq;
     filterNode.Q.value = 0;
     filterNode.gain.value = 0;
-
-
-
   }
 
 
@@ -234,6 +308,31 @@ var playKey = function (data) {
     filter01.oninput = function () {
         filter01Display.innerHTML = filter01.value;
         socket.emit('filterBroadcast', filter01.value)
+    };
+
+//DELAY
+    var delayTime = document.getElementById('delayTime');
+    var delayTimeDisplay = document.getElementById('delayTimeDisplay');
+
+    delayTime.oninput = function () {
+        delayTimeDisplay.innerHTML = delayTime.value;
+        socket.emit('delayTimeBroadcast', delayTime.value)
+    };
+
+    var delayFeedback = document.getElementById('delayFeedback');
+    var delayFeedbackDisplay = document.getElementById('delayFeedbackDisplay');
+
+    delayFeedback.oninput = function () {
+        delayFeedbackDisplay.innerHTML = delayFeedback.value;
+        socket.emit('delayFeedbackBroadcast', delayFeedback.value)
+    };
+
+    var delayCutoff = document.getElementById('delayCutoff');
+    var delayCutoffDisplay = document.getElementById('delayCutoffDisplay');
+
+    delayCutoff.oninput = function () {
+        delayCutoffDisplay.innerHTML = delayCutoff.value;
+        socket.emit('delayCutoffBroadcast', delayCutoff.value)
     };
 
 
