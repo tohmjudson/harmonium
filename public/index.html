@@ -33,7 +33,7 @@
         <input type="range" id="delayTime" name="delayTime-slider" min="0" max="2" step="0.05" value="0.5" style="float:right">
     </label>
     <label for="delayFeedback"> Feedback <span id='delayFeedbackDisplay'>0.8</span>
-        <input type="range" id="delayFeedback" name="delayFeedback-slider" min="0" max="0.8" step="0.1" value="0.8" style="float:right">
+        <input type="range" id="delayFeedback" name="delayFeedback-slider" min="0" max="0.8" step="0.01" value="0.8" style="float:right">
     </label>
 
     <label for="delayCutoff"> Cutoff <span id='delayCutoffDisplay'>1000</span>
@@ -41,60 +41,65 @@
     </label>
 
     <h3><input type="checkbox" class="checkbox"> Sequencing On Off</h3>
-        <div class="sequencer">
-          <input id="slider1" list="slider--1" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
-          <input id="slider2" list="slider--2" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
-          <input id="slider3" list="slider--3" class="slider" type="range" min="0" max="19" orient="vertical" value="4">
-          <input id="slider4" list="slider--4" class="slider" type="range" min="0" max="19" orient="vertical" value="5">
-          <input id="slider5" list="slider--5" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
-          <input id="slider6" list="slider--6" class="slider" type="range" min="0" max="19" orient="vertical" value="9">
-          <input id="slider7" list="slider--7" class="slider" type="range" min="0" max="19" orient="vertical" value="11">
-          <input id="slider8" list="slider--8" class="slider" type="range" min="0" max="19" orient="vertical" value="12">
-          <input id="slider9" list="slider--9" class="slider" type="range" min="0" max="19" orient="vertical" value="11">
-          <input id="slider10" list="slider--10" class="slider" type="range" min="0" max="19" orient="vertical" value="9">
-          <input id="slider11" list="slider--11" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
-          <input id="slider12" list="slider--12" class="slider" type="range" min="0" max="19" orient="vertical" value="5">
-          <input id="slider13" list="slider--13" class="slider" type="range" min="0" max="19" orient="vertical" value="4">
-          <input id="slider14" list="slider--14" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
-          <input id="slider15" list="slider--15" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
-          <input id="slider16" list="slider--16" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
+        <div class="sequencer" id="sequencer">
+          <input data-id="0" id="slider1" list="slider--1" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
+          <input data-id="1" id="slider2" list="slider--2" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
+          <input data-id="2" id="slider3" list="slider--3" class="slider" type="range" min="0" max="19" orient="vertical" value="4">
+          <input data-id="3" id="slider4" list="slider--4" class="slider" type="range" min="0" max="19" orient="vertical" value="5">
+          <input data-id="4" id="slider5" list="slider--5" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
+          <input data-id="5" id="slider6" list="slider--6" class="slider" type="range" min="0" max="19" orient="vertical" value="9">
+          <input data-id="6" id="slider7" list="slider--7" class="slider" type="range" min="0" max="19" orient="vertical" value="11">
+          <input data-id="7" id="slider8" list="slider--8" class="slider" type="range" min="0" max="19" orient="vertical" value="12">
+          <input data-id="8" id="slider9" list="slider--9" class="slider" type="range" min="0" max="19" orient="vertical" value="11">
+          <input data-id="9" id="slider10" list="slider--10" class="slider" type="range" min="0" max="19" orient="vertical" value="9">
+          <input data-id="10" id="slider11" list="slider--11" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
+          <input data-id="11" id="slider12" list="slider--12" class="slider" type="range" min="0" max="19" orient="vertical" value="5">
+          <input data-id="12" id="slider13" list="slider--13" class="slider" type="range" min="0" max="19" orient="vertical" value="4">
+          <input data-id="13" id="slider14" list="slider--14" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
+          <input data-id="14" id="slider15" list="slider--15" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
+          <input data-id="15" id="slider16" list="slider--16" class="slider" type="range" min="0" max="19" orient="vertical" value="7">
         </div>
-        <div class="seqMute">Active
-          <input id="checkbox01" class="muteBox" type="checkbox">
-          <input id="checkbox02" class="muteBox" type="checkbox">
-          <input id="checkbox03" class="muteBox" type="checkbox">
-          <input id="checkbox04" class="muteBox" type="checkbox">
-          <input id="checkbox05" class="muteBox" type="checkbox">
-          <input id="checkbox06" class="muteBox" type="checkbox">
-          <input id="checkbox07" class="muteBox" type="checkbox">
-          <input id="checkbox08" class="muteBox" type="checkbox">
-          <input id="checkbox09" class="muteBox" type="checkbox">
-          <input id="checkbox10" class="muteBox" type="checkbox">
-          <input id="checkbox11" class="muteBox" type="checkbox">
-          <input id="checkbox12" class="muteBox" type="checkbox">
-          <input id="checkbox13" class="muteBox" type="checkbox">
-          <input id="checkbox14" class="muteBox" type="checkbox">
-          <input id="checkbox15" class="muteBox" type="checkbox">
-          <input id="checkbox16" class="muteBox" type="checkbox">
+        <div class="seqMute" id="mutes">Active
+          <input data-id="0" id="checkbox01" class="muteBox" type="checkbox">
+          <input data-id="1" id="checkbox02" class="muteBox" type="checkbox">
+          <input data-id="2" id="checkbox03" class="muteBox" type="checkbox">
+          <input data-id="3" id="checkbox04" class="muteBox" type="checkbox">
+          <input data-id="4" id="checkbox05" class="muteBox" type="checkbox">
+          <input data-id="5" id="checkbox06" class="muteBox" type="checkbox">
+          <input data-id="6" id="checkbox07" class="muteBox" type="checkbox">
+          <input data-id="7" id="checkbox08" class="muteBox" type="checkbox">
+          <input data-id="8" id="checkbox09" class="muteBox" type="checkbox">
+          <input data-id="9" id="checkbox10" class="muteBox" type="checkbox">
+          <input data-id="10" id="checkbox11" class="muteBox" type="checkbox">
+          <input data-id="11" id="checkbox12" class="muteBox" type="checkbox">
+          <input data-id="12" id="checkbox13" class="muteBox" type="checkbox">
+          <input data-id="13" id="checkbox14" class="muteBox" type="checkbox">
+          <input data-id="14" id="checkbox15" class="muteBox" type="checkbox">
+          <input data-id="15" id="checkbox16" class="muteBox" type="checkbox">
         </div>
 <hr>
-    <canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;">
+<canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;">
 
 <!-- SCRIPTING -->
+
+
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="javascripts/globals.js"></script>
+    <script type="text/javascript" src="javascripts/synth.js"></script>
+    <script type="text/javascript" src="javascripts/sequencer.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
+
+
+    <script type="text/javascript" src="javascripts/waveform.js"></script>
     
     <script type="text/javascript">
-        var serial = [ 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C']
-
         function showValue(newValue) {
           document.getElementById("slider1Display").innerHTML = serial[newValue%12];
-
         }
-
-
     </script>
 
 </body>
