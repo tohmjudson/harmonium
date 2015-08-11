@@ -44,41 +44,25 @@ io.on('connection', function(socket){
     	socket.broadcast.emit('keyPressed', data);// All users
   	});
 
-    socket.on('baseOctaveBroadcast', function (data){
-      socket.emit('baseOctaveBroadcast', data);// Current user
-      socket.broadcast.emit('baseOctaveBroadcast', data);// All users
-    });
 
-  	socket.on('basePitchBroadcast', function (data){
-      socket.emit('basePitchBroadcast', data);// Current user
-    	socket.broadcast.emit('basePitchBroadcast', data);// All users
-  	});
 
-    socket.on('filterBroadcast', function (data){
-      socket.emit('filterBroadcast', data);// Current user
-      socket.broadcast.emit('filterBroadcast', data);// All users
-    });
 
-    socket.on('delayTimeBroadcast', function (data){
-      socket.emit('delayTimeBroadcast', data);// Current user
-      socket.broadcast.emit('delayTimeBroadcast', data);// All users
-    });
 
-    socket.on('delayFeedbackBroadcast', function (data){
-      socket.emit('delayFeedbackBroadcast', data);// Current user
-      socket.broadcast.emit('delayFeedbackBroadcast', data);// All users
-    });
-
-    socket.on('delayCutoffBroadcast', function (data){
-      socket.emit('delayCutoffBroadcast', data);// Current user
-      socket.broadcast.emit('delayCutoffBroadcast', data);// All users
-    });
-
+//DELAY NOTIFICATIONS RECIEVED(app.js) AND BROADCAST(synth.js)
     socket.on('delayNotification', function (data){
       socket.emit('delayNotification', data);// Current user
       socket.broadcast.emit('delayNotification', data);// All users
-      console.log(data);
     });
+
+
+//PITCH NOTIFICATIONS RECIEVED(app.js) AND BROADCAST(synth.js)
+    socket.on('pitchNotification', function (data){
+      socket.emit('pitchNotification', data);// Current user
+      socket.broadcast.emit('pitchNotification', data);// All users
+    });
+
+
+
 
     socket.on('sequencerOnOff', function (data){
       //socket.emit('sequencerOnOff', data);//Current user

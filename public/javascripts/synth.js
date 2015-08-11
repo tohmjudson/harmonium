@@ -23,15 +23,30 @@ socket.on('keyPressed', function(data){
           };
   });
 
-var $delays = $('.delay');
-$delays.on('change', function(e) {
-    var delayData = {
-    time: delayTime.value,
-    feedback: delayFeedback.value,
-    cutoff: delayCutoff.value
-    };
-  socket.emit('delayNotification', delayData);
-});
+
+//================ Delay Notifications Received from Server ==================//
+socket.on('delayNotification',function(data) {
+      delayTimeDisplay.innerHTML = data.time;
+      delayTime.value = data.time;
+      delayFeedbackDisplay.innerHTML = data.feedback;
+      delayFeedback.value = data.feedback;
+      delayCutoffDisplay.innerHTML = data.cutoff;
+      delayCutoff.value = data.cutoff;
+ });
+
+//================ Pitch Notifications Received from Server ==================//
+socket.on('pitchNotification',function(data) {
+
+    baseOctaveDisplay.innerHTML = data.octave - 1;
+    basePitchDisplay.innerHTML = serial[data.base];    
+    filter01Display.innerHTML = data.filter;
+
+    baseOctave.value = data.octave;
+    basePitch.value = data.base;
+    filter01.value = data.filter
+
+ });
+
 
 var selectWaveform = function (data) {
       $('#' + data.id);// Passes button id
