@@ -74,6 +74,12 @@ io.on('connection', function(socket){
       socket.broadcast.emit('delayCutoffBroadcast', data);// All users
     });
 
+    socket.on('delayNotification', function (data){
+      socket.emit('delayNotification', data);// Current user
+      socket.broadcast.emit('delayNotification', data);// All users
+      console.log(data);
+    });
+
     socket.on('sequencerOnOff', function (data){
       //socket.emit('sequencerOnOff', data);//Current user
       socket.broadcast.emit('sequencerOnOff', data);// All users

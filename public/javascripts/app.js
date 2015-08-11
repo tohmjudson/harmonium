@@ -1,11 +1,9 @@
 $(function() {
 
 //=============== User Tracking=====================//
-var username = prompt('What\'s your username?');// The visitor is asked for their username...
-socket.emit('newUser', username); // It's sent with the signal "newUser"
-socket.on('message', function (message) { // A log is displayed when the server sends us a "message"
-  console.log('SERVER: ' + message);
-})
+var username = prompt('What\'s your username?');
+socket.emit('newUser', username);
+
 
 socket.on('activeUsers', function (users){
   $("ul").html('')
@@ -30,48 +28,32 @@ socket.on('all_mouse_activity', function(data){
 
 
 //=============== SOCKET.EMIT =====================//
-var baseOctave = document.getElementById('baseOctave');
-var baseOctaveDisplay = document.getElementById('baseOctaveDisplay');
-
 baseOctave.oninput = function () {
     baseOctaveDisplay.innerHTML = baseOctave.value - 1;
     socket.emit('baseOctaveBroadcast', baseOctave.value)
 };
-
-var basePitch = document.getElementById('basePitch');
-var basePitchDisplay = document.getElementById('basePitchDisplay');
 
 basePitch.oninput = function () {
     basePitchDisplay.innerHTML = serial[basePitch.value];
     socket.emit('basePitchBroadcast', basePitch.value)
 };
 
-var filter01 = document.getElementById('filter01');
-var filter01Display = document.getElementById('filter01Display');
-
 filter01.oninput = function () {
     filter01Display.innerHTML = filter01.value;
     socket.emit('filterBroadcast', filter01.value)
 };
 
-var delayTime = document.getElementById('delayTime');
-var delayTimeDisplay = document.getElementById('delayTimeDisplay');
+
 
 delayTime.oninput = function () {
     delayTimeDisplay.innerHTML = delayTime.value;
     socket.emit('delayTimeBroadcast', delayTime.value)
 };
 
-var delayFeedback = document.getElementById('delayFeedback');
-var delayFeedbackDisplay = document.getElementById('delayFeedbackDisplay');
-
 delayFeedback.oninput = function () {
     delayFeedbackDisplay.innerHTML = delayFeedback.value;
     socket.emit('delayFeedbackBroadcast', delayFeedback.value)
 };
-
-var delayCutoff = document.getElementById('delayCutoff');
-var delayCutoffDisplay = document.getElementById('delayCutoffDisplay');
 
 delayCutoff.oninput = function () {
     delayCutoffDisplay.innerHTML = delayCutoff.value;
@@ -95,6 +77,8 @@ socket.on('filterBroadcast', function (data){
       filter01.value = data;
     });
 
+
+
 socket.on('delayTimeBroadcast', function (data){
       delayTimeDisplay.innerHTML = data;
       delayTime.value = data;
@@ -109,6 +93,8 @@ socket.on('delayCutoffBroadcast', function (data){
       delayCutoffDisplay.innerHTML = data;
       delayCutoff.value = data;
     });
+
+
 
 socket.on('sequencerOnOff', function (data){
   $('.checkbox').prop('checked', data);
@@ -135,7 +121,5 @@ socket.on('sequencerMuteBroadcast', function (data){
 
   })
 });
-
-
 
 }); 

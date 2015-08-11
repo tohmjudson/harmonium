@@ -1,21 +1,46 @@
+//Program Globals
+var socket = io();
+var audioContext = new (window.AudioContext || window.webkitAudioContext);
+
+//Sequencer
 var bpm          = 240; //NOT BPM!
 var noteLength   = bpm / 60 * (1/8);
 var attack       = 1/64;
 var lookahead    = 0.04;
 var intervalTime = 25;
-
-// these will keep track of the state of the sequencer:
 var nextNoteTime = null; // when the next note is happening
 var currentNote  = 0; // the index of the current note from 0 - 15
 var intervalId   = null; // the id of the setInterval lookahead
 
-var socket = io();
-var oscType = 'sine';
+var values = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0, 7];
+var mutedArray = [true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true];
 
-var audioContext = new (window.AudioContext || window.webkitAudioContext);
+//Synth
+var oscType = 'sine';
+var baseOctave = document.getElementById('baseOctave');
+var baseOctaveDisplay = document.getElementById('baseOctaveDisplay');
+var basePitch = document.getElementById('basePitch');
+var basePitchDisplay = document.getElementById('basePitchDisplay');
+var filter01 = document.getElementById('filter01');
+var filter01Display = document.getElementById('filter01Display');
+
+
+//Delay
+var delayTime = document.getElementById('delayTime');
+var delayTimeDisplay = document.getElementById('delayTimeDisplay');
+var delayFeedback = document.getElementById('delayFeedback');
+var delayFeedbackDisplay = document.getElementById('delayFeedbackDisplay');
+var delayCutoff = document.getElementById('delayCutoff');
+var delayCutoffDisplay = document.getElementById('delayCutoffDisplay');
+
+//Visual
 var analyser = audioContext.createAnalyser();
 
-var values = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0, 7];
-var mutedArray = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+//Utility
+var serial = [ 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C'];
 
-var serial = [ 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C']
+var delayData = {
+    time: delayTime.value,
+    feedback: delayFeedback.value,
+    cutoff: delayCutoff.value
+    };

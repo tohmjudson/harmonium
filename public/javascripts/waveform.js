@@ -1,4 +1,3 @@
-
 $(function() {
 
 var canvas = document.getElementById("waveFormCanvas");

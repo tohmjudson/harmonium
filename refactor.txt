@@ -1,0 +1,39 @@
+Planning structure for refactor
+
+var userData = {
+	username:
+	usercolor:
+};
+socket.emit('userNotification', userData);
+
+
+var sequencerData = {
+	step: 
+	pitch: 
+	gain: 
+	tempo:
+
+};
+socket.emit('sequencerNotification', sequencerData);
+
+var synthData = {
+	type:
+	octave:
+	scale:
+	pitch:
+	filter:
+	attack:
+	release:
+	glide:
+	mute:
+
+};
+socket.emit('synthNotification', synthData);
+
+var delayData = {
+	time: delayTime.value,
+	feedback: delayFeedback.value,
+	cutoff: delayCutoff.value
+};
+socket.emit('delayNotification', delayData);
+

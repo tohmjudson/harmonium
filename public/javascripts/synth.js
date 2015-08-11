@@ -23,6 +23,16 @@ socket.on('keyPressed', function(data){
           };
   });
 
+var $delays = $('.delay');
+$delays.on('change', function(e) {
+    var delayData = {
+    time: delayTime.value,
+    feedback: delayFeedback.value,
+    cutoff: delayCutoff.value
+    };
+  socket.emit('delayNotification', delayData);
+});
+
 var selectWaveform = function (data) {
       $('#' + data.id);// Passes button id
     }
@@ -88,6 +98,7 @@ mtof = function (note) {
   var pitchAdder = 69 - parseInt(basePitch.value);
   return ( Math.pow(2, (note-pitchAdder+octave) / 12) ) * 440.0;
 }
+
 
 
 });
