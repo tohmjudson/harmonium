@@ -1,13 +1,5 @@
 $(function() {
-
-//Key Press
-$('.key').click(function () {
-  var keyData = {
-    id: $(this).attr('id')
-  }
-  socket.emit('keyPress', keyData);
-});
-
+//=============== Waveform Selection Received from Server =====================//
 socket.on('keyPressed', function(data){
   selectWaveform(data);
       switch (data['id']) {
@@ -34,6 +26,7 @@ socket.on('delayNotification',function(data) {
       delayCutoff.value = data.cutoff;
  });
 
+
 //================ Pitch Notifications Received from Server ==================//
 socket.on('pitchNotification',function(data) {
 
@@ -48,6 +41,7 @@ socket.on('pitchNotification',function(data) {
  });
 
 
+//================ OSCILLATOR ==================//
 var selectWaveform = function (data) {
       $('#' + data.id);// Passes button id
     }
@@ -114,6 +108,8 @@ mtof = function (note) {
   return ( Math.pow(2, (note-pitchAdder+octave) / 12) ) * 440.0;
 }
 
+console.log (bpm);
+console.log (noteLength);
 
 
 });

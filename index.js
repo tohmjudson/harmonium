@@ -11,10 +11,9 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-	
-  	// When the client connects, they are sent a message
+
+//USER NOTIFICATIONS (refactor pending)
   	socket.emit('message', "You are connected!");// Current user
-  	// The other clients are told that someone new has arrived
     socket.broadcast.emit('message', 'Another user has just connected!');// All users
   	// As soon as the username is received, it's stored as a session variable
   	socket.on('newUser', function(username) {
@@ -25,27 +24,26 @@ io.on('connection', function(socket){
       io.sockets.sockets.forEach (function (e) {
           users.push ({username: e.username, color: e.color});
       });
-      console.log (users);
-      socket.emit('activeUsers', users); // Current user
-      socket.broadcast.emit('activeUsers', users); // All users
+      socket.emit('activeUsers', users);
+      socket.broadcast.emit('activeUsers', users);
   	});
-
-    socket.on('mouse_activity', function (data) {
-      socket.broadcast.emit('all_mouse_activity', {session_id: socket.id, coords: data});
-
-    });
 
     socket.on('message', function (message) {
         console.log(socket.username + ': ' + message);
     });
 
+//MOUSE NOTIFICATIONS RECIEVED(app.js) AND BROADCAST(app.js)
+    socket.on('mouse_activity', function (data) {
+      socket.broadcast.emit('all_mouse_activity', {session_id: socket.id, coords: data});
+
+    });
+
+
+//WAVEFROM NOTIFICATIONS RECIEVED(app.js) AND BROADCAST(synth.js)
   	socket.on('keyPress', function (data){
       socket.emit('keyPressed', data);// Current user
     	socket.broadcast.emit('keyPressed', data);// All users
   	});
-
-
-
 
 
 //DELAY NOTIFICATIONS RECIEVED(app.js) AND BROADCAST(synth.js)
@@ -62,8 +60,7 @@ io.on('connection', function(socket){
     });
 
 
-
-
+//SEQUENCER NOTIFICATIONS RECIEVED(app.js) AND BROADCAST(sequencer.js)
     socket.on('sequencerOnOff', function (data){
       //socket.emit('sequencerOnOff', data);//Current user
       socket.broadcast.emit('sequencerOnOff', data);// All users

@@ -3,8 +3,8 @@ var socket = io();
 var audioContext = new (window.AudioContext || window.webkitAudioContext);
 
 //Sequencer
-var bpm          = 240; //NOT BPM!
-var noteLength   = bpm / 60 * (1/8);
+var bpm          = 60;
+var noteLength   = (60/bpm )/4;
 var attack       = 1/64;
 var lookahead    = 0.04;
 var intervalTime = 25;
@@ -39,8 +39,18 @@ var analyser = audioContext.createAnalyser();
 //Utility
 var serial = [ 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C'];
 
+
+
+/*
 var delayData = {
     time: delayTime.value,
     feedback: delayFeedback.value,
     cutoff: delayCutoff.value
     };
+
+var pitchData = {
+	octave: baseOctave.value,
+	base: basePitch.value,
+	filter: filter01.value
+};
+*/

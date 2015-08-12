@@ -5,10 +5,6 @@ body {
   color: black;
 }
 
-div {
-	display: inline-block;
-}
-
 label {
     display: block;
     line-height: 25px;
@@ -18,11 +14,14 @@ li {
 list-style: none;
 }
 
-input {
-	
+input[type=range]{
+
 }
 
+
 .container{
+  width: 750px;
+  margin: 0 auto;
 }
 
 .users {
@@ -37,7 +36,9 @@ input {
 .pointer {
   position: absolute;
   background: red;
+  border-radius: 50%;
   width: 8px;
   height: 8px;
   z-index: 3;
 }
+

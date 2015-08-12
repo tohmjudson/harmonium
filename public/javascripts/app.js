@@ -12,7 +12,6 @@ socket.on('activeUsers', function (users){
 });
 
 
-
 //=============== Mouse Tracking =====================//
 $(document).on('mousemove', function(event){
   socket.emit('mouse_activity', {x: event.pageX, y: event.pageY})
@@ -29,6 +28,15 @@ socket.on('all_mouse_activity', function(data){
 
 
 
+//=============== Waveform Selection Sent To Server =====================//
+$('.key').click(function () {
+  var keyData = {
+    id: $(this).attr('id')
+  }
+  socket.emit('keyPress', keyData);
+});
+
+
 //============= Delay Notifications Sent to Server =====================//
 var $delays = $('.delay');
 $delays.on('change', function(e) {
@@ -39,7 +47,6 @@ $delays.on('change', function(e) {
     };
   socket.emit('delayNotification', delayData);
 });
-
 
 
 //============= Pitch Notifications Sent to Server =====================//
@@ -54,8 +61,7 @@ $pitchmods.on('change', function(e) {
 });
 
 
-
-
+//============= Sequencer Notifications Sent to Server =====================//
 socket.on('sequencerOnOff', function (data){
   $('.checkbox').prop('checked', data);
   if( $('.checkbox').is(':checked')) {
@@ -81,5 +87,7 @@ socket.on('sequencerMuteBroadcast', function (data){
 
   })
 });
+
+
 
 }); 

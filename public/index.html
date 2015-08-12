@@ -9,6 +9,8 @@
 </head>
 
 <body>
+
+<div class="container">
     <h1>Harmonium</h1>
     <h3>Active Users</h3>  
 
@@ -18,25 +20,25 @@
     <button id="1" class="key">Sawtooth</button>
     <button id="2" class="key">Triangle</button>
 <hr>
-    <label for="baseOctave"> Base Octave <span id='baseOctaveDisplay' >3</span>
-        <input type="range" id="baseOctave" name="baseOctave-slider" min="2" max="7" step="1" value="3" style="float:right" class="pitchmod">
+    <label for="baseOctave"> Base Octave <span id='baseOctaveDisplay' >4</span>
+        <input type="range" id="baseOctave" name="baseOctave-slider" min="2" max="7" step="1" value="4" style="float:right" class="pitchmod">
     </label>
     <label for="basePitch"> Base Pitch <span id='basePitchDisplay'>C</span>
         <input type="range" id="basePitch" name="basePitch-slider" min="0" max="12" step="1" value="0" style="float:right" class="pitchmod">
     </label>
-    <label for="filter01"> Lowpass Filter <span id='filter01Display'>0</span>
-        <input type="range" id="filter01" name="filter01-slider" min="20" max="20000" step="1" value="2000" style="float:right" class="pitchmod">
+    <label for="filter01"> Lowpass Filter <span id='filter01Display'>20000</span>
+        <input type="range" id="filter01" name="filter01-slider" min="20" max="20000" step="1" value="20000" style="float:right" class="pitchmod">
     </label>
 <hr>    
-    <label for="delayTime"> Delay Time <span id='delayTimeDisplay' >0.5</span>
-        <input type="range" id="delayTime" name="delayTime-slider" min="0" max="2" step="0.05" value="0.5" style="float:right" class="delay">
+    <label for="delayTime"> Delay Time <span id='delayTimeDisplay' >0.75</span>
+        <input type="range" id="delayTime" name="delayTime-slider" min="0" max="2" step="0.05" value="0.75" style="float:right" class="delay">
     </label>
-    <label for="delayFeedback"> Feedback <span id='delayFeedbackDisplay'>0.8</span>
-        <input type="range" id="delayFeedback" name="delayFeedback-slider" min="0" max="0.8" step="0.01" value="0.8" style="float:right" class="delay">
+    <label for="delayFeedback"> Feedback <span id='delayFeedbackDisplay'>0.35</span>
+        <input type="range" id="delayFeedback" name="delayFeedback-slider" min="0" max="0.8" step="0.01" value="0.35" style="float:right" class="delay">
     </label>
 
-    <label for="delayCutoff"> Cutoff <span id='delayCutoffDisplay'>1000</span>
-        <input type="range" id="delayCutoff" name="delayCutoff-slider" min="20" max="20000" step="1" value="1000" style="float:right" class="delay">
+    <label for="delayCutoff"> Cutoff <span id='delayCutoffDisplay'>20000</span>
+        <input type="range" id="delayCutoff" name="delayCutoff-slider" min="20" max="20000" step="1" value="20000" style="float:right" class="delay">
     </label>
 
     <h3><input type="checkbox" class="checkbox"> Sequencing On Off</h3>
@@ -77,8 +79,8 @@
           <input data-id="15" id="checkbox16" class="muteBox" type="checkbox" checked>
         </div>
 <hr>
-<canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;">
-
+<canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+</div>
 <!-- SCRIPTING -->
 
 
