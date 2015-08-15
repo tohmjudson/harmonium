@@ -1,11 +1,12 @@
 $(function() {
 
+/*
 $('.checkbox').on('change', function(e) {
   var sequencerOnOff;
   if( this.checked ) {
     sequencerOnOff = true;
     nextNoteTime = audioContext.currentTime;
-    scheduleSequence();
+    //scheduleSequence();
     intervalId = setInterval(scheduleSequence, intervalTime);
   } else {
     sequencerOnOff = false;
@@ -13,6 +14,7 @@ $('.checkbox').on('change', function(e) {
   }
   socket.emit('sequencerOnOff', sequencerOnOff);
 });
+*/
 
 var $sliders = $('.slider');
 $sliders.on('change', function(e) {
@@ -27,15 +29,5 @@ $mutes.on('change', function(e) {
   socket.emit('sequencerMuteBroadcast', mutedArray);
 });
 
-scheduleSequence =  function() {
-  while(nextNoteTime < audioContext.currentTime + lookahead) {
-    // schedule the next note
-    scheduleNote( values[currentNote], nextNoteTime, currentNote, mutedArray[currentNote] );
-    // advance the time
-    nextNoteTime += noteLength;
-    // keep track of which note we're on
-    currentNote = ++currentNote % values.length;
-  }
-}
 
 });

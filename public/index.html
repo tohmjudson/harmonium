@@ -20,7 +20,7 @@
     <button id="1" class="key">Sawtooth</button>
     <button id="2" class="key">Triangle</button>
 <hr>
-    <label for="baseOctave"> Base Octave <span id='baseOctaveDisplay' >4</span>
+    <label for="baseOctave"> Base Octave <span id='baseOctaveDisplay'>4</span>
         <input type="range" id="baseOctave" name="baseOctave-slider" min="2" max="7" step="1" value="4" style="float:right" class="pitchmod">
     </label>
     <label for="basePitch"> Base Pitch <span id='basePitchDisplay'>C</span>
@@ -30,7 +30,7 @@
         <input type="range" id="filter01" name="filter01-slider" min="20" max="20000" step="1" value="20000" style="float:right" class="pitchmod">
     </label>
 <hr>    
-    <label for="delayTime"> Delay Time <span id='delayTimeDisplay' >0.75</span>
+    <label for="delayTime"> Delay Time <span id='delayTimeDisplay'>0.75</span>
         <input type="range" id="delayTime" name="delayTime-slider" min="0" max="2" step="0.05" value="0.75" style="float:right" class="delay">
     </label>
     <label for="delayFeedback"> Feedback <span id='delayFeedbackDisplay'>0.35</span>
@@ -41,7 +41,8 @@
         <input type="range" id="delayCutoff" name="delayCutoff-slider" min="20" max="20000" step="1" value="20000" style="float:right" class="delay">
     </label>
 
-    <h3><input type="checkbox" class="checkbox"> Sequencing On Off</h3>
+    <!-- <h3><input type="checkbox" class="checkbox"> Sequencing On Off</h3> -->
+    <h3>Step Sequencer</h3>
         <div class="sequencer" id="sequencer">
           <input data-id="0" id="slider1" list="slider--1" class="slider" type="range" min="0" max="19" orient="vertical" value="0">
           <input data-id="1" id="slider2" list="slider--2" class="slider" type="range" min="0" max="19" orient="vertical" value="2">
@@ -80,16 +81,147 @@
         </div>
 <hr>
 <canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+
+
+
+
+
+<hr>
+
+<div class="app">
+
+            <label id="tempoBox">Tempo: <span id="showTempo">120</span> BPM
+                <input id="tempo" type="range" min="30.0" max="185.0" step="1" value="120" style="height: 20px; width: 200px">
+            </label>
+
+            <div class="tracks">
+                <div class="track-names">Metronome</div>
+                <div id="track-0-container">
+                    <div class="grid grid-track0" id="metro-ui-1"></div>
+                    <div class="grid grid-track0" id="metro-ui-2"></div>
+                    <div class="grid grid-track0" id="metro-ui-3"></div>
+                    <div class="grid grid-track0" id="metro-ui-4"></div>
+                    <div class="grid grid-track0" id="metro-ui-5"></div>
+                    <div class="grid grid-track0" id="metro-ui-6"></div>
+                    <div class="grid grid-track0" id="metro-ui-7"></div>
+                    <div class="grid grid-track0" id="metro-ui-8"></div>
+                    <div class="grid grid-track0" id="metro-ui-9"></div>
+                    <div class="grid grid-track0" id="metro-ui-10"></div>
+                    <div class="grid grid-track0" id="metro-ui-11"></div>
+                    <div class="grid grid-track0" id="metro-ui-12"></div>
+                    <div class="grid grid-track0" id="metro-ui-13"></div>
+                    <div class="grid grid-track0" id="metro-ui-14"></div>
+                    <div class="grid grid-track0" id="metro-ui-15"></div>
+                    <div class="grid grid-track0" id="metro-ui-16"></div>
+                </div>
+                <div class="track-names">Kick</div>
+                <div id="track-1-container">
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth1"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth2"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth3"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth4"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth5"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth6"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth7"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth8"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth9"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth10"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth11"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth12"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth13"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth14"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth15"></div>
+                    <div class="grid grid-track1" id="gridBeatTrack1-Rhyth16"></div>
+                </div>
+                <div class="track-names">Snare</div>
+                <div id="track-2-container">
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth1"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth2"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth3"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth4"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth5"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth6"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth7"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth8"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth9"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth10"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth11"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth12"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth13"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth14"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth15"></div>
+                    <div class="grid grid-track2" id="gridBeatTrack2-Rhyth16"></div>
+                </div>
+                <div class="track-names">HiHat</div>
+                <div id="track-3-container">
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth1"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth2"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth3"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth4"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth5"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth6"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth7"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth8"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth9"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth10"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth11"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth12"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth13"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth14"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth15"></div>
+                    <div class="grid grid-track3" id="gridBeatTrack3-Rhyth16"></div>
+                </div>
+                <div class="track-names">Shaker</div>
+                <div id="track-4-container">
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth1"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth2"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth3"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth4"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth5"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth6"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth7"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth8"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth9"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth10"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth11"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth12"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth13"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth14"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth15"></div>
+                    <div class="grid grid-track4" id="gridBeatTrack4-Rhyth16"></div>
+                </div>
+            </div>
+
+            <!-- DRUM PAD CONTAINER -->
+            <div class="drum-pad-container">
+                <!-- DRUM PADs -->
+<!--            <div class="drumPad" id="drumpad-track1">Kick</div>
+                <div class="drumPad" id="drumpad-track2">Snare</div>
+                <div class="drumPad" id="drumpad-track3">Hi-hat</div>
+                <div class="drumPad" id="drumpad-track4">Shaker</div> -->
+                <!-- PLAY -->
+                <div class="drumPad" id="play-button">Play/Stop</div>
+            </div>
+        </div>
+
 </div>
+
+
+
+
+
+
 <!-- SCRIPTING -->
-
-
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
+    <script type="text/javascript" src="javascripts/audiocontext_check.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/audiolib.js" charset="utf-8"></script>
+
     <script type="text/javascript" src="javascripts/globals.js"></script>
+    <script type="text/javascript" src="javascripts/beatbox.js"></script>
     <script type="text/javascript" src="javascripts/synth.js"></script>
     <script type="text/javascript" src="javascripts/sequencer.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>

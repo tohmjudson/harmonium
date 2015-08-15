@@ -3,10 +3,10 @@ var socket = io();
 var audioContext = new (window.AudioContext || window.webkitAudioContext);
 
 //Sequencer
-var bpm          = 60;
+var bpm          = 120;
 var noteLength   = (60/bpm )/4;
 var attack       = 1/64;
-var lookahead    = 0.04;
+var lookahead    = 0.1;
 var intervalTime = 25;
 var nextNoteTime = null; // when the next note is happening
 var currentNote  = 0; // the index of the current note from 0 - 15

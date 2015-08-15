@@ -46,6 +46,9 @@ var selectWaveform = function (data) {
       $('#' + data.id);// Passes button id
     }
 
+
+
+
 //TODO: ALL MUTE, GLIDE, FILTER MOVEMENT, REVERB
 scheduleNote = function (note, time, current, mute) {
   var oscillator = audioContext.createOscillator();
@@ -76,9 +79,8 @@ scheduleNote = function (note, time, current, mute) {
   feedback.connect(delayFilter);
   delayFilter.connect(delayNode);
 
-
   delayNode.connect(audioContext.destination);
-  
+ 
   oscillator.type = type;
   oscillator.frequency.value = mtof(note);
   oscillator.connect(filterNode);
@@ -107,9 +109,6 @@ mtof = function (note) {
   var pitchAdder = 69 - parseInt(basePitch.value);
   return ( Math.pow(2, (note-pitchAdder+octave) / 12) ) * 440.0;
 }
-
-console.log (bpm);
-console.log (noteLength);
 
 
 });
