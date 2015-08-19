@@ -41,7 +41,7 @@
         <input type="range" id="delayCutoff" name="delayCutoff-slider" min="20" max="20000" step="1" value="20000" style="float:right" class="delay">
     </label>
 
-    <!-- <h3><input type="checkbox" class="checkbox"> Sequencing On Off</h3> -->
+<!-- 303 -->
     <h3>Step Sequencer</h3>
         <div class="sequencer" id="sequencer">
           <input data-id="0" id="slider1" list="slider--1" class="slider" type="range" min="0" max="12" orient="vertical" value="0">
@@ -98,14 +98,10 @@
           <input data-id="15" id="checkbox16" class="accentBox" type="checkbox" >
         </div>
 <hr>
+<!-- Display -->
 <canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
-
-
-
-
-
 <hr>
-
+<!-- 808 -->
 <div class="app">
 
             <label id="tempoBox">Tempo: <span id="showTempo">120</span> BPM
@@ -210,48 +206,35 @@
                 </div>
             </div>
 
-            <!-- DRUM PAD CONTAINER -->
+            <!-- PLAY PAD CONTAINER -->
             <div class="drum-pad-container">
-                <!-- DRUM PADs -->
-<!--            <div class="drumPad" id="drumpad-track1">Kick</div>
-                <div class="drumPad" id="drumpad-track2">Snare</div>
-                <div class="drumPad" id="drumpad-track3">Hi-hat</div>
-                <div class="drumPad" id="drumpad-track4">Shaker</div> -->
-                <!-- PLAY -->
                 <div class="drumPad" id="play-button">Play/Stop</div>
             </div>
         </div>
 
 </div>
 
-
-
-
-
-
 <!-- SCRIPTING -->
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-
-    <script type="text/javascript" src="javascripts/audiocontext_check.js" charset="utf-8"></script>
-    <script type="text/javascript" src="javascripts/audiolib.js" charset="utf-8"></script>
-
-    <script type="text/javascript" src="javascripts/globals.js"></script>
-    <script type="text/javascript" src="javascripts/beatbox.js"></script>
-    <script type="text/javascript" src="javascripts/synth.js"></script>
-    <script type="text/javascript" src="javascripts/sequencer.js"></script>
-    <script type="text/javascript" src="javascripts/app.js"></script>
-
-
-    <script type="text/javascript" src="javascripts/waveform.js"></script>
-    
-    <script type="text/javascript">
-        function showValue(newValue) {
-          document.getElementById("slider1Display").innerHTML = serial[newValue%12];
-        }
-    </script>
+    <!-- EXTERNAL -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <!-- UTILITY -->
+        <script type="text/javascript" src="javascripts/audiocontext_check.js" charset="utf-8"></script>
+        <script type="text/javascript" src="javascripts/audiolib.js" charset="utf-8"></script>
+    <!-- APP -->
+        <script type="text/javascript" src="javascripts/globals.js"></script>
+        <script type="text/javascript" src="javascripts/beatbox.js"></script>
+        <script type="text/javascript" src="javascripts/synth.js"></script>
+        <script type="text/javascript" src="javascripts/sequencer.js"></script>
+        <script type="text/javascript" src="javascripts/app.js"></script>
+        <script type="text/javascript" src="javascripts/waveform.js"></script>
+        
+        <script type="text/javascript">
+            function showValue(newValue) {
+              document.getElementById("slider1Display").innerHTML = serial[newValue%12];
+            }
+        </script>
 
 </body>
 </html>

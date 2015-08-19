@@ -27,7 +27,6 @@ socket.on('all_mouse_activity', function(data){
 });
 
 
-
 //=============== Waveform Selection Sent To Server =====================//
 $('.key').click(function () {
   var keyData = {

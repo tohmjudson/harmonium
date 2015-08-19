@@ -15,7 +15,6 @@ list-style: none;
 }
 
 input[type=range]{
-
 }
 
 .container{
@@ -41,12 +40,6 @@ input[type=range]{
   z-index: 3;
 }
 
-
-
-
-
-
-
 .app{
   width: 1000px;
   margin: 0 auto;
@@ -60,27 +53,22 @@ input[type=range]{
 
 .tracks{
   position:relative;
-  
 }
 
 .grid-track0{
   display:inline-block;
-
 }
 
 .grid-track1{
   display:inline-block;
-
 }
 
 .grid-track2{
   display:inline-block;
-
 }
 
 .grid-track3{
   display:inline-block;
-
 }
 
 .grid-track4{
@@ -102,7 +90,6 @@ input[type=range]{
 .drum-pad-container{
   position:relative;
   top:50px;
-
 }
 
 .track-name{

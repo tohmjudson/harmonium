@@ -40,4 +40,4 @@ function draw() {
 
 draw();
 
-}); //jQuery Wrap
+});

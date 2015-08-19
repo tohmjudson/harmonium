@@ -39,19 +39,3 @@ var analyser = audioContext.createAnalyser();
 
 //Utility
 var serial = [ 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C'];
-
-
-
-/*
-var delayData = {
-    time: delayTime.value,
-    feedback: delayFeedback.value,
-    cutoff: delayCutoff.value
-    };
-
-var pitchData = {
-	octave: baseOctave.value,
-	base: basePitch.value,
-	filter: filter01.value
-};
-*/

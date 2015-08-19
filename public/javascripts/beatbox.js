@@ -104,15 +104,12 @@ $(function () {
             current16thNote = 1;
             currentNote = 0;
             futureTickTime = audioContext.currentTime;
-            //console.log(futureTickTime);
             scheduler();
             return "stop";
         } else {
             window.clearTimeout(timerID);
             return "play";
         }
-
-    //socket.emit('sequencerOnOff', sequencerOnOff);
     }
 
     $("#play-button").on("click", function () {

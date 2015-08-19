@@ -29,7 +29,6 @@ socket.on('delayNotification',function(data) {
 
 //================ Pitch Notifications Received from Server ==================//
 socket.on('pitchNotification',function(data) {
-
     baseOctaveDisplay.innerHTML = data.octave - 1;
     basePitchDisplay.innerHTML = serial[data.base];    
     filter01Display.innerHTML = data.filter;
@@ -37,16 +36,13 @@ socket.on('pitchNotification',function(data) {
     baseOctave.value = data.octave;
     basePitch.value = data.base;
     filter01.value = data.filter
-
  });
 
 
-//================ OSCILLATOR ==================//
+//================ OSCILLATOR TYPE==================//
 var selectWaveform = function (data) {
       $('#' + data.id);// Passes button id
     }
-
-
 
 
 //TODO: ALL MUTE, OCTAVE, GLIDE, FILTER MOVEMENT, REVERB
@@ -54,6 +50,9 @@ var selectWaveform = function (data) {
 scheduleNote = function (note, time, current, mute, accent) {
   var oscillator = audioContext.createOscillator();
   var gainNode = audioContext.createGain();
+  var delayNode = audioContext.createDelay();
+  var feedback = audioContext.createGain();
+  var delayFilter = audioContext.createBiquadFilter();
   var muteGainNode = audioContext.createGain();
   var accentGainNode = audioContext.createGain();
   var filterNode = audioContext.createBiquadFilter();
@@ -61,6 +60,25 @@ scheduleNote = function (note, time, current, mute, accent) {
   var filter01Freq= filter01.value;
   var muted = mute;
   var accented = accent;
+
+//OSC > Filter > Env > Mute > Accent > Delay
+  oscillator.type = type;
+  oscillator.frequency.value = mtof(note);
+  oscillator.start(time);
+  oscillator.stop(time + noteLength);
+  oscillator.connect(analyser);
+  oscillator.connect(filterNode);
+  
+  filterNode.type = 'lowpass';
+  filterNode.frequency.value = filter01Freq;
+  filterNode.Q.value = 0;
+  filterNode.gain.value = 0;
+  filterNode.connect(gainNode);
+
+  gainNode.gain.setValueAtTime(0, time);
+  gainNode.gain.linearRampToValueAtTime(1, time + attack);
+  gainNode.gain.linearRampToValueAtTime(0, time + noteLength);
+  gainNode.connect(muteGainNode);
 
   if(muted) {
     muteGainNode.gain.value = 1;
@@ -75,42 +93,16 @@ scheduleNote = function (note, time, current, mute, accent) {
     accentGainNode.gain.value = 0.01;
   }
   accentGainNode.connect(audioContext.destination);
+  accentGainNode.connect(delayNode);
 
-
-  var delayNode = audioContext.createDelay();
   delayNode.delayTime.value = delayTime.value;
-  
-  var feedback = audioContext.createGain();
   feedback.gain.value = delayFeedback.value;
-  
-  var delayFilter = audioContext.createBiquadFilter();
   delayFilter.frequency.value = delayCutoff.value;
 
   delayNode.connect(feedback);
   feedback.connect(delayFilter);
   delayFilter.connect(delayNode);
-
   delayNode.connect(audioContext.destination);
- 
-  oscillator.type = type;
-  oscillator.frequency.value = mtof(note);
-  oscillator.connect(filterNode);
-  
-  gainNode.connect(muteGainNode);
-  muteGainNode.connect(delayNode);
-
-  gainNode.gain.setValueAtTime(0, time);
-  gainNode.gain.linearRampToValueAtTime(1, time + attack);
-  gainNode.gain.linearRampToValueAtTime(0, time + noteLength);
-  oscillator.start(time);
-  oscillator.stop(time + noteLength);
-  oscillator.connect(analyser);
-
-  filterNode.connect(gainNode);
-  filterNode.type = 'lowpass';
-  filterNode.frequency.value = filter01Freq;
-  filterNode.Q.value = 0;
-  filterNode.gain.value = 0;
 }
 
 
