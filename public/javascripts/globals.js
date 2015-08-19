@@ -14,6 +14,7 @@ var intervalId   = null; // the id of the setInterval lookahead
 
 var values = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0, 7];
 var mutedArray = [true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true];
+var accentArray = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
 
 //Synth
 var oscType = 'sine';

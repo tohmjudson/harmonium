@@ -88,6 +88,13 @@ socket.on('sequencerMuteBroadcast', function (data){
   })
 });
 
+socket.on('sequencerAccentBroadcast', function (data){
+  accentArray = data;
+  $('#accents > input').each(function () {
+    $(this).prop('checked', accentArray[$(this).attr('data-id')]);
+
+  })
+});
 
 
 }); 

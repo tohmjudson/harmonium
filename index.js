@@ -75,6 +75,13 @@ io.on('connection', function(socket){
       //socket.emit('sequencerMuteBroadcast', data);//Current user
       socket.broadcast.emit('sequencerMuteBroadcast', data);// All users
     });
+
+    socket.on('sequencerAccentBroadcast', function (data){
+      //socket.emit('sequencerMuteBroadcast', data);//Current user
+      socket.broadcast.emit('sequencerAccentBroadcast', data);// All users
+    });
+
+
 });
 
 http.listen(3000, function(){

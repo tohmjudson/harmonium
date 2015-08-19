@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #f2f2f2;
+  background: #3B3734;
   color: black;
 }
 
@@ -87,6 +87,18 @@ input[type=range]{
   display:inline-block;
 }
 
+.grid-beat1{
+  background-color: #F67017;
+}
+.grid-beat2{
+  background-color: #F2A200;
+}
+.grid-beat3{
+  background-color: #EEDF2F;
+}
+.grid-beat4{
+  background-color: #FFFFFF;
+}
 .drum-pad-container{
   position:relative;
   top:50px;

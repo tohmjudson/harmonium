@@ -49,22 +49,33 @@ var selectWaveform = function (data) {
 
 
 
-//TODO: ALL MUTE, GLIDE, FILTER MOVEMENT, REVERB
-scheduleNote = function (note, time, current, mute) {
+//TODO: ALL MUTE, OCTAVE, GLIDE, FILTER MOVEMENT, REVERB
+//ACCENT IN PROGRESS: not quite right , but working
+scheduleNote = function (note, time, current, mute, accent) {
   var oscillator = audioContext.createOscillator();
   var gainNode = audioContext.createGain();
   var muteGainNode = audioContext.createGain();
+  var accentGainNode = audioContext.createGain();
   var filterNode = audioContext.createBiquadFilter();
   var type = oscType;
   var filter01Freq= filter01.value;
   var muted = mute;
+  var accented = accent;
 
   if(muted) {
     muteGainNode.gain.value = 1;
   } else {
     muteGainNode.gain.value = 0;
   }
-  muteGainNode.connect(audioContext.destination);
+  muteGainNode.connect(accentGainNode);
+
+  if(accented) {
+    accentGainNode.gain.value = 1;
+  } else {
+    accentGainNode.gain.value = 0.01;
+  }
+  accentGainNode.connect(audioContext.destination);
+
 
   var delayNode = audioContext.createDelay();
   delayNode.delayTime.value = delayTime.value;

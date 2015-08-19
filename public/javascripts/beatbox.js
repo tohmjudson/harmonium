@@ -83,7 +83,7 @@ $(function () {
 
         currentNote = ++currentNote % values.length;
 
-        scheduleNote((values[beatDivisionNumber-1]), time, beatDivisionNumber -1, mutedArray[beatDivisionNumber-1]);
+        scheduleNote((values[beatDivisionNumber-1]), time, beatDivisionNumber -1, mutedArray[beatDivisionNumber-1], accentArray[beatDivisionNumber-1]);
     }
 
 //================ Scheduler ==================//

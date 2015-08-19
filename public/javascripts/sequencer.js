@@ -29,5 +29,10 @@ $mutes.on('change', function(e) {
   socket.emit('sequencerMuteBroadcast', mutedArray);
 });
 
+var $accents = $('.accentBox:checkbox');
+$accents.on('change', function(e) {
+  accentArray[ $(this).index() ] = $(this).is(':checked');
+  socket.emit('sequencerAccentBroadcast', accentArray);
+});
 
 });
