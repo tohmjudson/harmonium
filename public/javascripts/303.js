@@ -39,15 +39,41 @@ socket.on('pitchNotification',function(data) {
  });
 
 
+//================= Watchers =======================//
+var $sliders = $('.slider');
+$sliders.on('change', function(e) {
+  pitchesArray[ $(this).index() ] = $(this).val();
+  socket.emit('sequencerPitchValues', pitchesArray);
+});
+
+var $mutes = $('.muteBox:checkbox');
+$mutes.on('change', function(e) {
+  mutedArray[ $(this).index() ] = $(this).is(':checked');
+  socket.emit('sequencerMuteBroadcast', mutedArray);
+});
+
+var $accents = $('.accentBox:checkbox');
+$accents.on('change', function(e) {
+  accentArray[ $(this).index() ] = $(this).is(':checked');
+  socket.emit('sequencerAccentBroadcast', accentArray);
+});
+
+
 //================ OSCILLATOR TYPE==================//
 var selectWaveform = function (data) {
       $('#' + data.id);// Passes button id
     }
 
 
+scheduleSynth = function (current16thNote, time) {
+    currentNote = ++currentNote % pitchesArray.length;
+    monoSynth((pitchesArray[current16thNote-1]), time, current16thNote -1, mutedArray[current16thNote-1], accentArray[current16thNote-1]);
+}
+
+
 //TODO: ALL MUTE, OCTAVE, GLIDE, FILTER MOVEMENT, REVERB
 //ACCENT IN PROGRESS: not quite right , but working
-scheduleNote = function (note, time, current, mute, accent) {
+monoSynth = function (note, time, current, mute, accent) {
   var oscillator = audioContext.createOscillator();
   var gainNode = audioContext.createGain();
   var delayNode = audioContext.createDelay();
@@ -90,7 +116,7 @@ scheduleNote = function (note, time, current, mute, accent) {
   if(accented) {
     accentGainNode.gain.value = 1;
   } else {
-    accentGainNode.gain.value = 0.01;
+    accentGainNode.gain.value = 0.8;
   }
   accentGainNode.connect(audioContext.destination);
   accentGainNode.connect(delayNode);

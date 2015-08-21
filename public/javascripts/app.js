@@ -73,9 +73,9 @@ socket.on('sequencerOnOff', function (data){
 });
 
 socket.on('sequencerPitchValues', function (data){
-  values = data;
+  pitchesArray = data;
   $('#sequencer > input').each(function () {
-    $(this).val(values[$(this).attr('data-id')]);
+    $(this).val(pitchesArray[$(this).attr('data-id')]);
   })
 });
 

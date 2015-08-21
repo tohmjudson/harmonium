@@ -41,3 +41,9 @@ function draw() {
 draw();
 
 });
+
+/* Required HTML to use this
+<!-- Display
+<canvas id="waveFormCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+<hr>-->
+*/
